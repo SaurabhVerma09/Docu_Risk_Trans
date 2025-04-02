@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Risk Analyzer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-center text-blue-700">PDF Risk Analyzer</h1>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data" class="mt-6">
+            <label class="block text-lg font-medium">Upload a PDF:</label>
+            <input type="file" name="pdf" required class="mt-2 p-2 w-full border rounded">
+            <button type="submit" class="mt-4 w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+                Analyze
+            </button>
+        </form>
+
+        {% if risks_with_sentiment %}
+        <h2 class="text-2xl font-semibold mt-6">Risk Analysis Results</h2>
+
+        <h3 class="text-xl font-medium text-red-600 mt-4">High Risk</h3>
+        {% for risk in categorized_risks['high'] %}
+        <div class="bg-red-100 p-4 my-2 rounded shadow">
+            <p>{{ risk.text }}</p>
+            <p><strong>Sentiment:</strong> {{ risk.sentiment }}</p>
+            <p><strong>Kannada Translation:</strong> {{ risk.text_kn }}</p>
+            <p><strong>Hindi Translation:</strong> {{ risk.text_hi }}</p>
+        </div>
+        {% endfor %}
+
+        <h3 class="text-xl font-medium text-orange-600 mt-4">Medium Risk</h3>
+        {% for risk in categorized_risks['medium'] %}
+        <div class="bg-orange-100 p-4 my-2 rounded shadow">
+            <p>{{ risk.text }}</p>
+            <p><strong>Sentiment:</strong> {{ risk.sentiment }}</p>
+            <p><strong>Kannada Translation:</strong> {{ risk.text_kn }}</p>
+            <p><strong>Hindi Translation:</strong> {{ risk.text_hi }}</p>
+        </div>
+        {% endfor %}
+
+        <h3 class="text-xl font-medium text-green-600 mt-4">Low Risk</h3>
+        {% for risk in categorized_risks['low'] %}
+        <div class="bg-green-100 p-4 my-2 rounded shadow">
+            <p>{{ risk.text }}</p>
+            <p><strong>Sentiment:</strong> {{ risk.sentiment }}</p>
+            <p><strong>Kannada Translation:</strong> {{ risk.text_kn }}</p>
+            <p><strong>Hindi Translation:</strong> {{ risk.text_hi }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
